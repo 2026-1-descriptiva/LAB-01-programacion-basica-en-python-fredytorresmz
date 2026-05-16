@@ -5,6 +5,7 @@ solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+import csv
 
 def pregunta_04():
     """
@@ -26,3 +27,23 @@ def pregunta_04():
      ('12', 3)]
 
     """
+
+    conteo = {}
+    with open("files/input/data.csv", mode="r", newline="", encoding="utf-8") as datos:
+        reader = csv.reader(datos, delimiter ='\t')
+        for fila in reader:
+            mes = fila[2].split('-')[1]   # se busca ayuda de la función split y separar por guión:  "1999-02-28" = "02"
+            if mes in conteo:
+                conteo[mes] = conteo[mes] + 1
+            else:
+                conteo[mes] = 1
+
+    lista_tuplas = []
+    for mes in conteo:
+        lista_tuplas.append((mes, conteo[mes]))
+
+    lista_tuplas.sort() # lista ordenada
+    return lista_tuplas
+
+resultado = pregunta_04()
+print("El resultado es: ", resultado)

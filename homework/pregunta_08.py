@@ -4,7 +4,7 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_08():
     """
@@ -27,3 +27,26 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+
+    valores = {}
+    with open("files/input/data.csv", mode="r", newline="", encoding="utf-8") as datos:
+        reader = csv.reader(datos, delimiter='\t')
+        for fila in reader:
+            letra = fila[0]
+            numero = int(fila[1])
+            if numero in valores:
+                valores[numero].append(letra)
+            else:
+                valores[numero] = [letra]
+
+    lista_tuplas = []
+    for numero in valores:
+        letras_no_repetidas = list(set(valores[numero]))
+        letras_no_repetidas.sort()
+        lista_tuplas.append((numero, letras_no_repetidas))
+
+    lista_tuplas.sort()
+    return lista_tuplas
+
+resultado = pregunta_08()
+print("El resultado de la lista es: ", resultado)
